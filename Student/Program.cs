@@ -17,7 +17,7 @@ namespace Student
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frm_addInfo());
+            Application.Run(new frm_login());
         }
     }
 }

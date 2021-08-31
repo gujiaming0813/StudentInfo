@@ -14,6 +14,10 @@ namespace Student
 {
     public partial class frm_addInfo : Form
     {
+        string sqlconnect = "server=121.199.24.155;database=School;uid=Joy;pwd=G.980813jm";
+
+        SqlConnection sqlConnection = null;
+
         public frm_addInfo()
         {
             InitializeComponent();
@@ -36,23 +40,35 @@ namespace Student
             int age = Convert.ToInt32(num_age.Value);
             string address = txt_address.Text;
             DateTime birth = date_birth.Value;
-
-            string sql = string.Format("insert into student(Name,Sex,Age,Birth,Address) values('{0}','{1}','{2}','{3}','{4}')",name,sex,age,birth,address);
-            string sqlconnect = "server=121.199.24.155;database=Student;uid=Joy;pwd=G.980813jm";
-            //string sqlconnect = ConfigurationManager.ConnectionStrings["sqlconnect"].ToString();
-            SqlConnection sqlConnection = new SqlConnection(sqlconnect);
-            sqlConnection.Open();
-            //MessageBox.Show("Ok");
-            SqlCommand comm = new SqlCommand(sql,sqlConnection);
-            int result = comm.ExecuteNonQuery();
-            if (result > 0)
+            try
             {
-                MessageBox.Show("Success");
+                string sql = string.Format("insert into student(Name,Sex,Age,Birth,Address) values('{0}','{1}','{2}','{3}','{4}')", name, sex, age, birth, address);
+                sqlConnection = new SqlConnection(sqlconnect);
+                sqlConnection.Open();
+                //MessageBox.Show("Ok");
+                SqlCommand comm = new SqlCommand(sql, sqlConnection);
+                int result = comm.ExecuteNonQuery();
+                if (result > 0)
+                {
+                    MessageBox.Show("Success");
+                }
+                else
+                {
+                    MessageBox.Show("Fail");
+                }
+
             }
-            else
+            catch
             {
                 MessageBox.Show("Fail");
             }
+            finally{
+                if (sqlConnection != null)
+                {
+                    sqlConnection.Close();
+                }
+            }
+            
             
         }
 
